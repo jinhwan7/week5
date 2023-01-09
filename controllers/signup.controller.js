@@ -8,8 +8,9 @@ class SignupController{
 
     signup = async (req,res,next)=>{
         const { nickname, password, confirm } =  req.body;
-        const createdUser = await this.signupService.createUser(nickname,password,confirm);
-        return res.status(200).json({message:"회원가입에 성공했습니다"});
+        const result = await this.signupService.createUser(nickname,password,confirm);
+
+        return res.status(result.status).json({message:result.message});  
     }
 }
 
