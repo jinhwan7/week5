@@ -5,7 +5,7 @@ const signupRouter = require('./signup.js');
 const loginRouter = require('./login.js');
 const postsRouter = require('./posts.js');
 
-
+//ㄴㄴㄴ
 router.get('/',(req,res)=>{
     res.send('연결되었습니다');
 })
