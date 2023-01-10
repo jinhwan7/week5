@@ -7,33 +7,35 @@ class PostsController {
         this.postsService = new PostsService()
     }
 
-    writePosts = async (req,res,next) => {
-       const{ title, content } = req.body
-        result = await this.postsService.writePosts( title, content )
-        return res.status(result.status).json({message: result.message})
+    writePosts = async (req, res, next) => {
+        const userId = res.locals.userId;
+        const { title, content } = req.body
+        const result = await this.postsService.writePosts(userId, title, content)
+        return res.status(result.status).json({ message: result.message })
     }
 
-    showAllPosts = async(req,res,next) => {
-        result = await this.postsService.showAllPosts()
-        return res.status(result.status).json({message: result.message, data:result.data})
+    showAllPosts = async (req, res, next) => {
+        const result = await this.postsService.showAllPosts()
+        return res.status(result.status).json({ message: result.message, data: result.data })
     }
 
-    showDetailPosts = async(req,res,next) => {
+    showDetailPosts = async (req, res, next) => {
+        const { postId } = req.params
+        const result = await this.postsService.showDetailPosts(postId)
+        return res.status(result.status).json({ message: result.message, data: result.data })
+    }
+
+    modifyPosts = async (req, res, next) => {
         const postId = req.params
-        result = await this.postsService.showDetailPosts( postId )
-        return res.status(result.status).json({message: result.message, data:result.data})
+        const { title, content } = req.body
+        const result = await this.postsService.modifyPosts(postId, title, content)
+        return res.status(result.status).json({ message: result.message })
     }
 
-    modifyPosts = async (req,res,next) => {
+    deletPosts = async (req, res, next) => {
         const postId = req.params
-        result = await this.postsService.modifyPosts(postId)
-        return res.status(result.status).json({message: result.message})
-    }
-
-    deletPosts = async (req,res,next) => {
-        const postId = req.params
-        result = await this.postsService.deletPosts(postId)
-        return res.status(result.status).json({message: result.message})
+        const result = await this.postsService.deletPosts(postId)
+        return res.status(result.status).json({ message: result.message })
     }
 }
 

@@ -11,7 +11,7 @@ class LoginController{
         const { nickname,password } = req.body;
 
         const result = await this.loginService.login(nickname,password);
-        res.cookie('Athorization',`Bearer ${ result.accessToken }`)
+        res.cookie('Authorization',`Bearer ${ result.accessToken }`)
         res.cookie('refresh',result.refreshToken)
         res.status(result.status).json({message:result.message, token: result.accessToken})
     }
