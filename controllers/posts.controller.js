@@ -26,15 +26,17 @@ class PostsController {
     }
 
     modifyPosts = async (req, res, next) => {
-        const postId = req.params
+        const { postId } = req.params
         const { title, content } = req.body
-        const result = await this.postsService.modifyPosts(postId, title, content)
+        const userId = res.locals.userId;
+        const result = await this.postsService.modifyPosts(postId, title, content,userId)
         return res.status(result.status).json({ message: result.message })
     }
 
     deletPosts = async (req, res, next) => {
-        const postId = req.params
-        const result = await this.postsService.deletPosts(postId)
+        const userId = res.locals.userId
+        const { postId } = req.params
+        const result = await this.postsService.deletePosts(postId,userId)
         return res.status(result.status).json({ message: result.message })
     }
 }
