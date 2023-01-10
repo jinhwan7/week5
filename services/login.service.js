@@ -41,7 +41,10 @@ class LoginService {
                 message: "로그인성공"
             }
         }else {
-            
+            return{
+                status:400,
+                message:"아이디 비밀번호가 틀렸습니다"
+            }
         }
     }
 }

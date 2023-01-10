@@ -13,7 +13,7 @@ class LoginController{
         const result = await this.loginService.login(nickname,password);
         res.cookie('Athorization',`Bearer ${ result.accessToken }`)
         res.cookie('refresh',result.refreshToken)
-        res.status(result.status).json({token: result.accessToken})
+        res.status(result.status).json({message:result.message, token: result.accessToken})
     }
 
     
