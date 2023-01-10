@@ -26,6 +26,22 @@ class PostsRepository {
         return post
     }
 
+    modifyPosts = async( postId, title, content, userId ) => {
+       const result =  await this.Post.update({
+            title: title, content: content,
+        },{
+            where:{postId:postId, UserId:userId}
+        })
+        
+        return result
+    }
+    deletePosts = (postId,userId)=>{
+        const result = this.Post.destroy({
+            where:{postId:postId, UserId:userId}
+        })
+        return result
+
+    }
 
 }
 

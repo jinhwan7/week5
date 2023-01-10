@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
             });
             if(!userId.length){return res.status(400).send({message:"다시 로그인해야합니다."})}
             userId = JSON.parse(JSON.stringify(userId))[0].UserId
-            console.log(userId);
+            console.log("userId: ",userId);
             const accessToken = jwt.sign(
                                     { userId: userId },
                                     process.env.SECRET_KEY,

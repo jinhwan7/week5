@@ -64,8 +64,24 @@ class PostsService {
         }
     }
 
-    modifyPosts = async (postId, title, content) => {
-        const posts = await this.postsRepository.modifyPosts(postId, title, content);
+    modifyPosts = async (postId, title, content,userId) => {
+
+        const post = await this.postsRepository.findOnePosts(postId)
+        if(post===null){
+            return {
+                status: 400,
+                message: "게시글이 없습니다",
+                
+            }
+        }
+        const posts = await this.postsRepository.modifyPosts(postId, title, content, userId);
+        if(posts[0] === 0 ){
+            return {
+                status: 400,
+                message: "본인이 쓴 게시글만 수정이 가능합니다",
+                data: posts
+            }
+        }
         return {
             status: 200,
             message: "게시글 수정 완료",
@@ -73,9 +89,21 @@ class PostsService {
         }
     }
 
-    deletPosts = async (postId) => {
-        const posts = await this.postsRepository.modifyPosts(postId);
-
+    deletePosts = async (postId, userId) => {
+        const post = await this.postsRepository.findOnePosts(postId)
+        if(post===null){
+            return {
+                status: 400,
+                message: "게시글이 없습니다",      
+            }
+        }
+        const posts = await this.postsRepository.deletePosts(postId, userId);
+        if(posts === 0){
+            return {
+                status: 400,
+                message: "본인이 쓴 게시글이 아닙니다",
+            }
+        }
         return {
             status: 200,
             message: "게시글 삭제 완료",
