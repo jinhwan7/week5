@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User,{targetKey:"userId", foreignKey:"UserId"});
+      this.hasMany(models.Comment,{sourceKey:"postId",foreingKey:"PostId"})
     }
   }
   Post.init({

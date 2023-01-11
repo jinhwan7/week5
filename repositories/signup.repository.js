@@ -17,8 +17,8 @@ class SignupRepository{
 
     createUser = async (nickname,password)=>{
         await this.User.create({
-            nickname:nickname,
-            password:password
+            nickname : nickname,
+            password : password
         });
         
     }

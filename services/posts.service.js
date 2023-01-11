@@ -1,16 +1,30 @@
 const PostsRepository = require('../repositories/posts.repository.js');
 const { Post } = require('../models/index.js');
 const { User } = require('../models/index.js');
-const { post } = require('../routes/signup.js');
+
+const joi = require('joi');
+const postSchema = joi.object({
+    title: joi.string().required(),
+    content: joi.string().required(),
+})
+
+
+
 class PostsService {
     constructor() {
         this.postsRepository = new PostsRepository(Post, User);
 
     }
     writePosts = async (userId, title, content) => {
+        const resultSchema = postSchema.validate({title,content});
+        if(resultSchema.error){
+            return {
+                status:400,
+                message:"데이터형식이 잘못되었습니다"
+            }
+        }
         
         const posts = await this.postsRepository.writePosts(userId, title, content);
-        
         return {
             status: 200,
             message: "게시글을 작성하였습니다",
