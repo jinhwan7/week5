@@ -36,6 +36,7 @@ class LikeService {
     showLikedPost = async (userId)=>{
         const result = await this.likeRepository.findLikedPost(userId);
         const parseResult = JSON.parse(JSON.stringify(result))
+        
         //console.log(parseResult)
         // const likes = parseResult.Post.Likes
         //console.log(parseResult[0].Post.Likes)

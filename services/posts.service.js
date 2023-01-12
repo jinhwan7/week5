@@ -34,15 +34,16 @@ class PostsService {
 
     showAllPosts = async () => {
         const result = await this.postsRepository.findAllPosts();
-        
-        const posts = JSON.parse(JSON.stringify(result));
-        
-        if (posts.length === 0) {
+        console.log(result.length)
+        if (result.length === 0) {
             return {
                 status: 404,
                 message: "게시글이 없습니다",
             }
         }
+        const posts = JSON.parse(JSON.stringify(result));
+        
+        
         const re_posts = posts.map((post) => {
             return {
                 postId: post.postId,
