@@ -4,9 +4,9 @@ class LoginRepository{
         this.RefToken = RefToken;
     }
 
-    findUser = async ( nickname, password ) => {
-        const user =  await this.User.findAll({
-            where:{ nickname:nickname, password:password }
+    findUser = async ( nickname) => {
+        const user =  await this.User.findOne({
+            where:{ nickname:nickname }
         })
         return user
     }

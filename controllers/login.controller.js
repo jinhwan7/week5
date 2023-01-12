@@ -16,7 +16,6 @@ class LoginController{
         res.status(result.status).json({message:result.message, token: result.accessToken})
     }
 
-    
 
 }
 

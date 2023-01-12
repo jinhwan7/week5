@@ -1,6 +1,6 @@
 const SignupRepository = require('../repositories/signup.repository.js');
 const { User } = require('../models/index.js');
-const { rmSync } = require('fs');
+const bcrypt = require('bcrypt');
 
 class SignupService {
     constructor() {
@@ -13,7 +13,7 @@ class SignupService {
                 message:"비밀번호랑 비밀번호 확인이 다릅니다"
             }
         }
-        const message = '';
+        
         //입력값 형식 확인
         const regex_id = /^[A-z0-9]{3,}$/;
         const regex_pw = /^[A-Za-z0-9\`\~\!\@\#\$|%|^|&|*|(|)|_|+\-\=\{\}\[\]\,\.\/\?\;\'\:\"]{6,}$/;
@@ -37,17 +37,18 @@ class SignupService {
                 message:"닉네임중복",   
             }
         }else{
-            await this.signupRepository.createUser(nickname,password);
+            const encryptedPassword = bcrypt.hashSync(
+                password,
+                Number(process.env.SALT_NUM)
+            )
+
+
+            await this.signupRepository.createUser(nickname, encryptedPassword);
             return{
                 status:200,
                 message:"회원가입에 성공하였습니다"
             }
         }            
-            
-        
-        
-
-
     }
 }
 
