@@ -30,10 +30,13 @@ class PostsRepository {
             include: [{
                 model: this.User,
                 attributes: ['nickname']
-            },{
-                model:this.Like
-            }
-        ]
+            }, {
+                model: this.Like
+            }],
+            group: ['postId'],
+            order: [['createdAt', 'DESC']],
+            //raw: true, // raw: true를 하면 데이터를 JSON 형태로 반환해준다.
+
         })
         return posts
     }

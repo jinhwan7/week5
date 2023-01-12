@@ -34,7 +34,6 @@ class PostsService {
 
     showAllPosts = async () => {
         const result = await this.postsRepository.findAllPosts();
-        console.log(result.length)
         if (result.length === 0) {
             return {
                 status: 404,
