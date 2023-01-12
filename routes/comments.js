@@ -10,19 +10,16 @@ router.post('/:postId',validToken,commentsController.writeComment);
 
 
 //댓글 목록 조회
-router.get('/:postId');
+router.get('/:postId',commentsController.showAllComment);
 
-
-//댓글 상세 조회
-router.get('/:commentId');
 
 
 //댓글 수정
-router.put('/:commentId');
+router.put('/:commentId',validToken,commentsController.modifyComment);
 
 
 //댓글 삭제
-router.delete('/:commentId');
+router.delete('/:commentId',validToken,commentsController.deleteComment);
 
 module.exports = router;
 

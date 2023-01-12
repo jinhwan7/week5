@@ -1,6 +1,6 @@
 const PostsRepository = require('../repositories/posts.repository.js');
-const { Post } = require('../models/index.js');
-const { User } = require('../models/index.js');
+const { Post, User, Like } = require('../models/index.js');
+
 
 const joi = require('joi');
 const postSchema = joi.object({
@@ -12,7 +12,7 @@ const postSchema = joi.object({
 
 class PostsService {
     constructor() {
-        this.postsRepository = new PostsRepository(Post, User);
+        this.postsRepository = new PostsRepository(Post, User, Like);
 
     }
     writePosts = async (userId, title, content) => {
@@ -36,7 +36,7 @@ class PostsService {
         const result = await this.postsRepository.findAllPosts();
         
         const posts = JSON.parse(JSON.stringify(result));
-        console.log(posts);
+        
         if (posts.length === 0) {
             return {
                 status: 404,
@@ -51,6 +51,7 @@ class PostsService {
                 title: post.title,
                 createdAt: post.createdAt,
                 updatedAt: post.updatedAt,
+                likes:post.likes
             }
 
         })
